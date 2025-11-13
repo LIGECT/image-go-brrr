@@ -1,0 +1,40 @@
+{
+  "name": "image-go-brrr",
+  "version": "0.1.0",
+  "description": "An image carousel with arrows and navigation dots. Automatically advances every 5 seconds.",
+  "keywords": [
+    "carousel",
+    "slider",
+    "image-slider",
+    "javascript",
+    "frontend",
+    "ui-component"
+  ],
+  "bugs": {
+    "url": "https://github.com/LIGECT/image-go-brrr/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LIGECT/image-go-brrr.git"
+  },
+  "license": "ISC",
+  "author": "LIGECT <ligect@gmail.com> (https://github.com/LIGECT)",
+  "type": "module",
+  "main": "dist/carousel.cjs.js",
+  "module": "dist/carousel.esm.js",
+  "scripts": {
+    "build": "rollup -c -w",
+    "start": "live-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@rollup/plugin-babel": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "live-server": "^1.2.0",
+    "rollup": "^4.52.5",
+    "rollup-plugin-postcss": "^4.0.2"
+  }
+}
