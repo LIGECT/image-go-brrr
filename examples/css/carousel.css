@@ -15,4 +15,5 @@ img {
 .carousel-strip {
   display: flex;
   flex-wrap: nowrap;
+  transition: transform 0.5s ease-in-out;
 }

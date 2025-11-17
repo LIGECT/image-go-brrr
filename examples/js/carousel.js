@@ -1,7 +1,6 @@
 class Carousel {
   constructor(containerSelector) {
     this.container = document.querySelector(containerSelector);
-    this.currentIndex = 0;
 
     if (!this.container) {
       console.error(
@@ -11,6 +10,22 @@ class Carousel {
     }
 
     this.wrapContents();
+    this.originalCount = this.strip.children.length;
+    this.setupClones();
+    this.currentIndex = 1;
+    this.goToSlide(this.currentIndex, false);
+
+    this.strip.addEventListener('transitionend', () => {
+      if (this.currentIndex === this.originalCount + 1) {
+        this.currentIndex = 1;
+        this.goToSlide(this.currentIndex, false);
+      }
+
+      if (this.currentIndex === 0) {
+        this.currentIndex = this.originalCount;
+        this.goToSlide(this.currentIndex, false);
+      }
+    });
   }
 
   createBlock(tagName, className) {
@@ -39,24 +54,39 @@ class Carousel {
     this.frame = frame;
   }
 
-  goToSlide(index) {
+  setupClones() {
+    const first = this.strip.children[0];
+    const last = this.strip.children[this.strip.children.length - 1];
+
+    const firstClone = first.cloneNode(true);
+    const lastClone = last.cloneNode(true);
+
+    this.strip.appendChild(firstClone);
+    this.strip.insertBefore(lastClone, first);
+  }
+
+  goToSlide(index, withAnimation = true) {
     if (!this.strip) {
       console.error('Strip element not found. Was it initialized?');
       return;
+    }
+
+    if (withAnimation) {
+      this.strip.style.transition = 'transform 0.5s ease-in-out';
+    } else {
+      this.strip.style.transition = 'none';
     }
 
     this.strip.style.transform = `translateX(-${100 * index}%)`;
   }
 
   nextSlide() {
-    const numSlides = this.strip.children.length;
-    this.currentIndex = (this.currentIndex + 1) % numSlides;
+    this.currentIndex++;
     this.goToSlide(this.currentIndex);
   }
 
   prevSlide() {
-    const numSlides = this.strip.children.length;
-    this.currentIndex = (this.currentIndex - 1 + numSlides) % numSlides;
+    this.currentIndex--;
     this.goToSlide(this.currentIndex);
   }
 }
